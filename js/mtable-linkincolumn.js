@@ -4,9 +4,11 @@
 
         $(this).each(function(e){
             var table = $(this);
-            var tbody = (table.find('tbody').length > 0) ? table.find('tbody').not("."+args.exceptLink) : table;
-            args = parseArgs(table, args);
-				applyLinks(tbody, args.targetColumn, args.targetLink);
+            var tbody = table.find('tbody').not("."+args.exceptLink);
+				args = parseArgs(table, args);
+				if(table.find('tbody').length > 0){
+					applyLinks(tbody, args.targetColumn, args.targetLink);
+				}
         });
     
         function parseArgs(table, args) {
@@ -19,8 +21,8 @@
             return args;
         }
 
-        function applyLinks(table, targetColumn, targetLink) {
-            table.find('tr').each(function(i) {
+        function applyLinks(block, targetColumn, targetLink) {
+            block.find('tr').each(function(i) {
 					 var NewName = '<a href="'+targetLink+$(this).children().eq(targetColumn).text()+'" target="_blank">'+$(this).children().eq(targetColumn).text()+'</a>';
 					 $(this).children().eq(targetColumn).html(NewName);
             });
